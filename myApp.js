@@ -100,24 +100,31 @@ const findOneByFood = async (food, done) => {
   }
 };
 
-const findPersonById = async (personId, done) => {
-  console.log(personId);
-  console.log({ _id: personId });
-  try {
-    const data = await Person.findById(personId);
-    console.log(data);
+const findPersonById = (personId, done) => {
+  Person.findById(personId, (err, data) => {
+    if (err) return console.error(err);
     done(null, data);
-  } catch (error) {
-    console.error("Error in finding one data for given key: ", food, error);
-    done(error);
-  }
+  });
 };
 
-const findEditThenSave = (personId, done) => {
+const findEditThenSave = async (personId, done) => {
   const foodToAdd = "hamburger";
 
-  done(null /*, data*/);
+  findPersonById(personId, (err, person) => {
+    if (err) return console.error(err);
+
+    person.favoriteFoods.push(foodToAdd);
+
+    person.save((err, data) => {
+      if (err) return console.error(err);
+
+      console.log(data);
+      done(null, data);
+    });
+  });
 };
+
+// console.log(findEditThenSave("669cf8b6849f7954fc62c6fc"));
 
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
