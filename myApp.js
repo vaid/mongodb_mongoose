@@ -22,22 +22,48 @@ const createAndSavePerson = (done) => {
   const newPerson = new Person({
     name: "MeTheCoder",
     age: 54,
-    favoriteFoods: ["Schwarma", "Lasanya", "Tepache", "Saurkrat"],
+    favoriteFoods: ["Schwarma", "LasanyaN", "Tepache", "Saurkrat"],
   });
+  // const datanewPerson.save();
   newPerson
     .save()
     .then(function (data) {
+      console.log("--------");
       console.log(data);
+      console.log("--------");
       done(null, data);
+      console.log("+--------+");
     })
     .catch((err) => {
+      console.log("============");
       console.log(err);
+      console.log("============");
       done(err);
+      console.log("+============+");
     });
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  console.log("--------");
+  console.log("Input array of people", arrayOfPeople);
+  console.log("--------");
+
+  Person.create(arrayOfPeople)
+    .then((data) => {
+      console.log("--------");
+      console.log(data);
+      console.log("--------");
+      done(null, data);
+      console.log("+--------+");
+    })
+    .catch((err) => {
+      console.log("============");
+      console.log(err);
+      console.log("============");
+      done(err);
+      console.log("+============+");
+    });
+  // done(null /*, data*/);
 };
 
 const findPeopleByName = (personName, done) => {
@@ -79,10 +105,48 @@ const queryChain = (done) => {
 
   done(null /*, data*/);
 };
+/*
+const btnCreateSingle = document.getElementById("create_single");
+btnCreateSingle.addEventListener(async () => {
+  const schema = new Schema({ name: String, age: { type: Number, min: 0 } });
+  const Person = mongoose.model("Person", schema);
 
+  const p = new Person({ name: "foo", age: "bar" });
+  // Cast to Number failed for value "bar" at path "age"
+  await p.save();
+
+  const p2 = new Person({ name: "foo", age: -1 });
+  // Path `age` (-1) is less than minimum allowed value (0).
+  await p2.save();
+});
+*/
 /** **Well Done !!**
 /* You completed these challenges, let's go celebrate !
  */
+
+/*
+const createAndSavePerson2 = async (done) => {
+  const newPerson = new Person({
+    name: "MeTheCoder",
+    age: 54,
+    favoriteFoods: ["Schwarma", "Lasanya", "Tepache", "Saurkrat"],
+  });
+  // const datanewPerson.save();
+  try {
+    const data = await newPerson.save();
+
+    console.log("--------");
+    console.log(data);
+    console.log("--------");
+  } catch (err) {
+    console.log("============");
+    console.log(err);
+    console.log("============");
+  }
+};
+
+createAndSavePerson2();
+*/
 
 //----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
 
