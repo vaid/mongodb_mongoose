@@ -70,21 +70,12 @@ const findPeopleByName = (personName, done) => {
   console.log("Input Argument: ", personName);
   console.log({ name: personName });
   console.log({ name: { personName } });
-  Person.find({ name: personName })
-    .then((foundPerson) => {
-      console.log("--------");
-      console.log(foundPerson);
-      console.log("--------");
-      done(null, foundPerson);
-      console.log("--------");
-    })
-    .catch((err) => {
-      console.log("============");
-      console.log(err);
-      console.log("============");
-      done(err);
-      console.log("============");
-    });
+  Person.find({ name: personName }, (err, foundPerson) => {
+    if (err) return console.error(err);
+
+    console.log(foundPerson);
+    done(null, foundPerson);
+  });
 };
 
 const findOneByFood = async (food, done) => {
@@ -129,7 +120,17 @@ const findEditThenSave = async (personId, done) => {
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
 
-  done(null /*, data*/);
+  Person.findOneAndUpdate(
+    { name: personName },
+    { age: ageToSet },
+    { new: true },
+    (err, updatedPerson) => {
+      if (err) return console.error(err);
+
+      console.log(updatedPerson);
+      done(null, updatedPerson);
+    }
+  );
 };
 
 const removeById = (personId, done) => {
