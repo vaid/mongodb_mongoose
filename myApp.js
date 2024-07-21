@@ -87,8 +87,17 @@ const findPeopleByName = (personName, done) => {
     });
 };
 
-const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+const findOneByFood = async (food, done) => {
+  console.log(food);
+  console.log({ favoriteFoods: food });
+  try {
+    const data = await Person.findOne({ favoriteFoods: food });
+    console.log(data);
+    done(null, data);
+  } catch (error) {
+    console.error("Error in finding one data for given key: ", food, error);
+    done(error);
+  }
 };
 
 const findPersonById = (personId, done) => {
