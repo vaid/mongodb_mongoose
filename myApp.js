@@ -100,8 +100,17 @@ const findOneByFood = async (food, done) => {
   }
 };
 
-const findPersonById = (personId, done) => {
-  done(null /*, data*/);
+const findPersonById = async (personId, done) => {
+  console.log(personId);
+  console.log({ _id: personId });
+  try {
+    const data = await Person.findById(personId);
+    console.log(data);
+    done(null, data);
+  } catch (error) {
+    console.error("Error in finding one data for given key: ", food, error);
+    done(error);
+  }
 };
 
 const findEditThenSave = (personId, done) => {
